@@ -72,6 +72,32 @@ class Greetings extends StatelessWidget {
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
 
+    String greetingText = "Night";
+    IconData greetingIcon = Icons.nightlight;
+    Color? iconColor = Colors.blueGrey[800];
+
+    DateTime _now = DateTime.now();
+    if(_now.hour >= 5 && _now.hour < 11){
+      greetingText = "Morning";
+      greetingIcon = Icons.sunny_snowing;
+      iconColor = Colors.amber[800];
+    }
+    else if(_now.hour >= 11 && _now.hour < 17){
+      greetingText = "Noon";
+      greetingIcon = Icons.sunny;
+      iconColor = Colors.amber[800];
+    }
+    else if(_now.hour >= 17 && _now.hour < 21){
+      greetingText = "Afternoon";
+      greetingIcon = Icons.nightlight_outlined;
+      iconColor = Colors.blueGrey[800];
+    }
+    else {
+      greetingText = "Night";
+      greetingIcon = Icons.nightlight;
+      iconColor = Colors.blueGrey[800];
+    }
+
     return Container(
       height: 100,
       width: screenWidth,
@@ -80,7 +106,7 @@ class Greetings extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "Good Afternoon , Sonnet",
+            "Good "+greetingText+" , Sonnet",
             style: GoogleFonts.comfortaa(
                 color: Colors.blueGrey[900],
                 fontSize: 20,
@@ -91,8 +117,8 @@ class Greetings extends StatelessWidget {
             width: 10,
           ),
           Icon(
-            Icons.wb_sunny,
-            color: Colors.amber[800],
+            greetingIcon,
+            color: iconColor,
           )
         ],
       ),
