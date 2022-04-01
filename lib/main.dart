@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'common/menu-card.dart';
 
 void main() {
   runApp(const MyApp());
@@ -79,7 +81,7 @@ class Greetings extends StatelessWidget {
         children: [
           Text(
             "Good Afternoon , Sonnet",
-            style: TextStyle(
+            style: GoogleFonts.comfortaa(
                 color: Colors.blueGrey[900],
                 fontSize: 20,
                 fontWeight: FontWeight.bold),
@@ -114,86 +116,38 @@ class Menus extends StatelessWidget {
         crossAxisSpacing: 10.0,
         childAspectRatio: (300 / (screenWidth / 2)),
         children: [
-          MenuCard(color: Colors.amber.shade400, icon: Icons.document_scanner, title: "Page Scanner",),
-          MenuCard(color: Colors.green.shade400, icon: Icons.playlist_play, title: "Book Player",),
-          MenuCard(color: Colors.blueGrey.shade400, icon: Icons.audio_file, title: "Audio Books",),
-          MenuCard(color: Colors.redAccent.shade200, icon: Icons.video_file, title: "Video Books",),
-          MenuCard(color: Colors.purple.shade400, icon: Icons.library_books, title: "PDF eBooks",),
-          MenuCard(color: Colors.blue.shade400, icon: Icons.local_library_outlined, title: "Publisher List",),
+          MenuCard(
+            color: Colors.amber.shade400,
+            icon: Icons.document_scanner,
+            title: "Page Scanner",
+          ),
+          MenuCard(
+            color: Colors.green.shade400,
+            icon: Icons.playlist_play,
+            title: "Book Player",
+          ),
+          MenuCard(
+            color: Colors.blueGrey.shade400,
+            icon: Icons.audio_file,
+            title: "Audio Books",
+          ),
+          MenuCard(
+            color: Colors.redAccent.shade200,
+            icon: Icons.video_file,
+            title: "Video Books",
+          ),
+          MenuCard(
+            color: Colors.purple.shade400,
+            icon: Icons.library_books,
+            title: "PDF eBooks",
+          ),
+          MenuCard(
+            color: Colors.blue.shade400,
+            icon: Icons.local_library_outlined,
+            title: "Publisher List",
+          ),
+
         ],
-      ),
-    );
-  }
-}
-
-class MenuCard extends StatefulWidget {
-  final Color color;
-  final IconData icon;
-  final String title;
-  const MenuCard({Key? key, required this.color, required this.icon, required this.title}) : super(key: key);
-
-  @override
-  State<MenuCard> createState() => _MenuCardState();
-}
-
-class _MenuCardState extends State<MenuCard> {
-
-
-  @override
-  Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
-    var iconName = widget.icon;
-    String cardTitle = widget.title;
-    return GestureDetector(
-      onTap: () {
-        debugPrint("clicked");
-      },
-      child: Card(
-        color: widget.color,
-        elevation: 2,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15))),
-        child: Stack(
-          children: [
-             Positioned(
-              left: -25,
-                top: -35,
-                child: Icon(iconName,
-              size: 120,
-              color: Colors.white30,
-            )),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                    width: screenWidth,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(15)),
-                      color: Colors.black12,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 5, bottom: 5, left: 10, right: 10),
-                      child: Stack(
-                        alignment: Alignment.centerLeft,
-                        children: [
-                          Text(
-                            cardTitle,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                          const Positioned(
-                              right: 0, child: Icon(Icons.arrow_right_alt))
-                        ],
-                      ),
-                    )),
-              ],
-            )
-          ],
-        ),
       ),
     );
   }
