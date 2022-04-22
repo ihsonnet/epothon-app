@@ -12,31 +12,36 @@ class ScannerPage extends StatefulWidget {
   State<ScannerPage> createState() => _ScannerPageState();
 }
 
+File? imageFile;
+String imagePath = "";
+
 class _ScannerPageState extends State<ScannerPage> {
   @override
   Widget build(BuildContext context) {
 
     var screenWidth = MediaQuery.of(context).size.width;
 
-    File? imageFile;
 
     void _cropImage(filePath) async {
       File? croppedImage = await ImageCropper().cropImage(
-          sourcePath: filePath, maxWidth: 1080, maxHeight: 1080);
+          sourcePath: filePath, aspectRatio: const CropAspectRatio(ratioX: 6, ratioY: 10));
       if(croppedImage != null){
         setState((){
+          debugPrint("Crop Done");
+          debugPrint(croppedImage.path);
           imageFile = croppedImage;
+          imagePath = croppedImage.path;
         });
       }
     }
 
     void _getFromGallery() async {
-      PickedFile? pickedFile = await ImagePicker().getImage(source: ImageSource.gallery,maxHeight: 1080, maxWidth: 1080);
+      XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
       _cropImage(pickedFile!.path);
     }
 
     void _getFromCamera() async {
-      PickedFile? pickedFile = await ImagePicker().getImage(source: ImageSource.camera,maxHeight: 1080, maxWidth: 1080);
+      XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
       _cropImage(pickedFile!.path);
     }
 
@@ -51,7 +56,7 @@ class _ScannerPageState extends State<ScannerPage> {
       child: Column(
         children: [
               Container(
-                  height: 500,
+                  height: 200,
                   width: screenWidth,
                   padding: const EdgeInsets.all(15.0),
                   child: GridView.count(
@@ -73,7 +78,7 @@ class _ScannerPageState extends State<ScannerPage> {
                                 children: [
                                   const Icon(
                                     Icons.camera_enhance_sharp,
-                                    size: 50,
+                                    size: 40,
                                     color: Colors.blue,
                                   ),
                                   const SizedBox(
@@ -100,7 +105,7 @@ class _ScannerPageState extends State<ScannerPage> {
                                 children: [
                                   const Icon(
                                     Icons.photo_album_rounded,
-                                    size: 50,
+                                    size: 40,
                                     color: Colors.blue,
                                   ),
                                   const SizedBox(
@@ -116,10 +121,13 @@ class _ScannerPageState extends State<ScannerPage> {
                         ),
                       ])
               ),
-              Row(
+              Column(
               children: [
-                const SizedBox(height: 10,),
-                if (imageFile != null) const Text("Image Found") else const Text("Image Not Found!")
+                Image.file(imageFile!,width: 200,),
+                MaterialButton(onPressed: () {
+                  debugPrint(imagePath);
+                },color: Colors.red,child: Text("Click"),),
+                if(imagePath != "") Text("Image Found") else Text("Image Not Found"),
               ],
             ),
           ],)
